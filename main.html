@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moliya Tracker</title>
+    <style> table {width:100%;} </style>
+</head>
+<body>
+    <h1>Moliya Tracker</h1>
+    <p>Jami balans: <strong id="balance">$1240</strong></p>
+
+    <form onsubmit="addTransaction(event)">
+        <input type="text" id="desc" placeholder="Tavsif" required>
+        <input type="number" id="amount" placeholder="Miqdor" required>
+        <select id="type"><option value="income">Kirim</option><option value="expense">Chiqim</option></select>
+        <button type="submit">Qo‘shish</button>
+    </form>
+
+    <table id="transactions"><thead><tr><th>Tavsif</th><th>Miqdor</th></tr></thead><tbody></tbody></table>
+
+    <script>
+        let balance = 1240;
+        function addTransaction(e) {
+            e.preventDefault();
+            const desc = document.getElementById('desc').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            const type = document.getElementById('type').value;
+            const tbody = document.querySelector('#transactions tbody');
+            tbody.innerHTML += `<tr><td>${desc}</td><td style="color:${type==='income'?'green':'red'}">$${amount}</td></tr>`;
+            balance += type === 'income' ? amount : -amount;
+            document.getElementById('balance').textContent = '$' + balance;
+        }
+    </script>
+</body>
+</html>
